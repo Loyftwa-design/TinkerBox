@@ -1,0 +1,47 @@
+name: Cleanup temporary branches
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/cleanup-temp-branches.trigger'
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove temporary branches and cleanup workflow
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          for BRANCH in \
+            ignore \
+            last-accidental \
+            oops \
+            really-stop \
+            release-prep \
+            release-v1.0.0 \
+            temp-final \
+            test \
+            tmp-release-v1.0.0 \
+            v1.0.0 \
+            zz-temp; do
+            git push origin ":refs/heads/$BRANCH" || true
+          done
+
+          rm -f .github/workflows/cleanup-temp-branches.yml
+          rm -f .github/cleanup-temp-branches.trigger
+          git add -A
+          git commit -m "Clean temporary release branches and workflow"
+          git push origin main
