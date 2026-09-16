@@ -128,6 +128,7 @@ local function CreatePopup(name, title, width, height)
     return popup
 end
 
+-- Titel ----------------------------------------------------------------------
 local title = frame:CreateFontString(nil, 'OVERLAY', 'GameFontHighlightLarge')
 title:SetPoint('TOPLEFT', frame, 'TOPLEFT', 18, -30)
 title:SetFont('Fonts\\FRIZQT__.TTF', 18, 'OUTLINE')
@@ -138,6 +139,7 @@ local subtitle = frame:CreateFontString(nil, 'OVERLAY', 'GameFontDisableSmall')
 subtitle:SetPoint('LEFT', title, 'RIGHT', 14, -1)
 subtitle:SetText('Notizen, Farm-Spots, IDs und ToDos')
 
+-- Titel-Eingabe ---------------------------------------------------------------
 local titlePanel = CreatePanel(frame)
 titlePanel:SetPoint('TOPLEFT', frame, 'TOPLEFT', 18, -62)
 titlePanel:SetSize(630, 56)
@@ -169,6 +171,7 @@ noteTitleInput:SetScript('OnTextChanged', function(self)
     titlePlaceholder:SetShown(self:GetText() == '')
 end)
 
+-- Editor ---------------------------------------------------------------------
 local editorPanel = CreatePanel(frame)
 editorPanel:SetPoint('TOPLEFT', frame, 'TOPLEFT', 18, -128)
 editorPanel:SetSize(630, 242)
@@ -214,6 +217,7 @@ notesScrollFrame:SetScript('OnMouseWheel', function(self, delta)
     end
 end)
 
+-- Buttons --------------------------------------------------------------------
 local saveNoteBtn = CreateThemeButton(frame, 150, 32, 'Notiz speichern')
 saveNoteBtn:SetPoint('BOTTOM', frame, 'BOTTOM', -154, 18)
 
@@ -223,6 +227,7 @@ notesListBtn:SetPoint('LEFT', saveNoteBtn, 'RIGHT', 14, 0)
 local newNoteBtn = CreateThemeButton(frame, 130, 32, 'Neu')
 newNoteBtn:SetPoint('LEFT', notesListBtn, 'RIGHT', 14, 0)
 
+-- Gespeicherte Notizen --------------------------------------------------------
 notesListFrame = CreatePopup('TinkerBoxNotesListFrame', 'Gespeicherte Notizen', 300, 390)
 
 local clearBtn = CreateThemeButton(notesListFrame, 145, 30, 'Liste leeren', true)
@@ -339,6 +344,7 @@ local function UpdateNotesList()
     listChild:SetHeight(math.max(1, y))
 end
 
+-- Aktionen -------------------------------------------------------------------
 saveNoteBtn:SetScript('OnClick', function()
     local db = EnsureDB()
     local titleText = noteTitleInput:GetText() or ''
@@ -351,6 +357,7 @@ saveNoteBtn:SetScript('OnClick', function()
 
     local finalTitle = titleText ~= '' and titleText or 'Unbenannte Notiz'
 
+    -- Wie in der alten TinkerNotes-Funktion wird beim Speichern ein neuer Eintrag angelegt.
     table.insert(db, 1, {
         title = finalTitle,
         body = bodyText,
@@ -385,6 +392,7 @@ end)
 
 notesListFrame:SetScript('OnShow', UpdateNotesList)
 
+-- Modul ----------------------------------------------------------------------
 frame:SetScript('OnShow', function()
     EnsureDB()
     TB.UI.headerText:SetText('TinkerNotes')

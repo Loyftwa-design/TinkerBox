@@ -137,6 +137,7 @@ local function ApplyMovementLocks()
     end
 end
 
+-- Titel ----------------------------------------------------------------------
 local title = frame:CreateFontString(nil, 'OVERLAY', 'GameFontHighlightLarge')
 title:SetPoint('TOPLEFT', frame, 'TOPLEFT', 18, -30)
 title:SetFont('Fonts\\FRIZQT__.TTF', 18, 'OUTLINE')
@@ -147,6 +148,7 @@ local subtitle = frame:CreateFontString(nil, 'OVERLAY', 'GameFontDisableSmall')
 subtitle:SetPoint('LEFT', title, 'RIGHT', 14, -1)
 subtitle:SetText('Anzeige, Verhalten und gespeicherte Daten')
 
+-- Linke Spalte: Benutzeroberfläche ------------------------------------------
 local uiPanel = CreatePanel(frame, 18, -62, 306, 300)
 
 local uiTitle = uiPanel:CreateFontString(nil, 'OVERLAY', 'GameFontNormal')
@@ -186,6 +188,7 @@ _G[scaleSlider:GetName() .. 'Low']:SetText('65%')
 _G[scaleSlider:GetName() .. 'High']:SetText('100%')
 _G[scaleSlider:GetName() .. 'Text']:SetText('')
 
+-- Rechte Spalte: System & Daten ---------------------------------------------
 local dataPanel = CreatePanel(frame, 342, -62, 306, 300)
 
 local dataTitle = dataPanel:CreateFontString(nil, 'OVERLAY', 'GameFontNormal')
@@ -253,6 +256,7 @@ versionText:SetTextColor(0.72, 0.76, 0.82)
 versionText:SetJustifyH('RIGHT')
 versionText:SetText('TinkerBox v' .. tostring(TB.VERSION or '1.0.0'))
 
+-- Verhalten ------------------------------------------------------------------
 cbMinimap:SetScript('OnClick', function(self)
     local s = EnsureSettings()
     s.showMinimap = self:GetChecked() and true or false
@@ -332,6 +336,7 @@ frame:SetScript('OnShow', function()
     Refresh()
 end)
 
+-- Persistente Fixierungs-Einstellungen direkt beim Login wieder anwenden.
 local settingsEvent = CreateFrame('Frame')
 settingsEvent:RegisterEvent('PLAYER_LOGIN')
 settingsEvent:SetScript('OnEvent', function()

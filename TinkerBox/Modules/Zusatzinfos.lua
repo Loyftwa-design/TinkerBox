@@ -36,6 +36,7 @@ local function StoreCurrentCharacterGold()
     if classFile then db.realmClasses[realm][player] = classFile end
 end
 
+-- Titel ----------------------------------------------------------------------
 local title = frame:CreateFontString(nil, 'OVERLAY', 'GameFontHighlightLarge')
 title:SetPoint('TOPLEFT', frame, 'TOPLEFT', 18, -30)
 title:SetFont('Fonts\\FRIZQT__.TTF', 18, 'OUTLINE')
@@ -46,6 +47,7 @@ local subtitle = frame:CreateFontString(nil, 'OVERLAY', 'GameFontDisableSmall')
 subtitle:SetPoint('LEFT', title, 'RIGHT', 14, -1)
 subtitle:SetText('Charaktergold und Gesamt-Gold')
 
+-- Zusammenfassung ------------------------------------------------------------
 local summary = CreatePanel(frame, 18, -62, 630, 42)
 
 local charLabel = summary:CreateFontString(nil, 'OVERLAY', 'GameFontDisableSmall')
@@ -54,6 +56,8 @@ charLabel:SetFont('Fonts\\FRIZQT__.TTF', 13, 'OUTLINE')
 charLabel:SetTextColor(1, 1, 1)
 charLabel:SetText('GESAMT-GOLD')
 
+-- Feste Geld-Spalten wie in der Charakterübersicht darunter.
+-- Die Offsets sind so gewählt, dass Gold/Silber/Kupfer oben und unten exakt fluchten.
 local totalCopperIcon = summary:CreateTexture(nil, 'ARTWORK')
 totalCopperIcon:SetSize(14, 14)
 totalCopperIcon:SetPoint('RIGHT', summary, 'RIGHT', -28, 0)
@@ -90,6 +94,8 @@ totalGold:SetJustifyH('RIGHT')
 totalGold:SetFont('Fonts\\FRIZQT__.TTF', 14, 'OUTLINE')
 totalGold:SetTextColor(1.00, 0.84, 0.00)
 
+
+-- Charakterliste -------------------------------------------------------------
 local listPanel = CreatePanel(frame, 18, -116, 630, 278)
 
 local listTitle = listPanel:CreateFontString(nil, 'OVERLAY', 'GameFontNormal')
@@ -123,6 +129,8 @@ scroll:EnableMouseWheel(true)
 local scrollChild = CreateFrame('Frame', nil, scroll)
 scrollChild:SetSize(602, 200)
 scroll:SetScrollChild(scrollChild)
+
+-- Alle 10 Charakterplätze passen in den sichtbaren Bereich; kein Scrollbalken/Scrollen nötig.
 scroll:EnableMouseWheel(false)
 
 for i = 1, MAX_ROWS do
@@ -138,6 +146,7 @@ for i = 1, MAX_ROWS do
     name:SetJustifyH('LEFT')
     name:SetFont('Fonts\\FRIZQT__.TTF', 14, 'OUTLINE')
 
+    -- Feste Geld-Spalten: Gold, Silber und Kupfer stehen in jeder Zeile exakt gleich.
     local copperIcon = row:CreateTexture(nil, 'ARTWORK')
     copperIcon:SetSize(14, 14)
     copperIcon:SetPoint('RIGHT', row, 'RIGHT', -14, 0)

@@ -10,7 +10,13 @@ art:SetPoint('TOP', frame, 'TOP', 0, -38)
 
 local intro = frame:CreateFontString(nil, 'OVERLAY', 'GameFontHighlightLarge')
 intro:SetPoint('TOP', art, 'BOTTOM', 0, -24)
-intro:SetText('|cffFFD100Willkommen in TinkerBox ' .. tostring(TB.VERSION or '1.0.0') .. '|r')
+local displayVersion =
+    (C_AddOns and C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata('TinkerBox', 'Version'))
+    or (GetAddOnMetadata and GetAddOnMetadata('TinkerBox', 'Version'))
+    or TB.VERSION
+    or '1.0.0'
+
+intro:SetText('|cffFFD100Willkommen in TinkerBox ' .. tostring(displayVersion) .. '|r')
 
 local tagline = frame:CreateFontString(nil, 'OVERLAY', 'GameFontHighlight')
 tagline:SetPoint('TOP', intro, 'BOTTOM', 0, -14)

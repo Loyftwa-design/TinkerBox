@@ -198,6 +198,7 @@ local function EnsureDay()
     end
 end
 
+-- Titel ----------------------------------------------------------------------
 local title = frame:CreateFontString(nil, 'OVERLAY', 'GameFontHighlightLarge')
 title:SetPoint('TOPLEFT', frame, 'TOPLEFT', 18, -30)
 title:SetFont('Fonts\\FRIZQT__.TTF', 18, 'OUTLINE')
@@ -208,6 +209,7 @@ local subtitle = frame:CreateFontString(nil, 'OVERLAY', 'GameFontDisableSmall')
 subtitle:SetPoint('LEFT', title, 'RIGHT', 14, -1)
 subtitle:SetText('Tages-Kassensturz und Gold-Session')
 
+-- Tagesübersicht -------------------------------------------------------------
 local summary = CreatePanel(frame, 18, -62, 630, 82)
 
 local currentLabel = summary:CreateFontString(nil, 'OVERLAY', 'GameFontDisableSmall')
@@ -238,6 +240,7 @@ local netValue = summary:CreateFontString(nil, 'OVERLAY', 'GameFontHighlightLarg
 netValue:SetPoint('TOPRIGHT', netLabel, 'BOTTOMRIGHT', 0, -7)
 netValue:SetFont('Fonts\\FRIZQT__.TTF', 16, 'OUTLINE')
 
+-- Info / Chart ---------------------------------------------------------------
 local chartPanel = CreatePanel(frame, 18, -154, 630, 176)
 local chartTitle = chartPanel:CreateFontString(nil, 'OVERLAY', 'GameFontNormal')
 chartTitle:SetPoint('TOPLEFT', chartPanel, 'TOPLEFT', 14, -10)
@@ -275,6 +278,7 @@ local emptyChart = chartPanel:CreateFontString(nil, 'OVERLAY', 'GameFontDisable'
 emptyChart:SetPoint('CENTER', chartPanel, 'CENTER', 0, -4)
 emptyChart:SetText('Noch kein Tagesverlauf vorhanden.')
 
+-- Aktionen -------------------------------------------------------------------
 local sessionBtn = CreateThemeButton(frame, 150, 32, 'Session starten')
 sessionBtn:SetPoint('BOTTOMLEFT', frame, 'BOTTOMLEFT', 18, 14)
 
@@ -285,6 +289,7 @@ local info = frame:CreateFontString(nil, 'OVERLAY', 'GameFontDisableSmall')
 info:SetPoint('BOTTOMRIGHT', frame, 'BOTTOMRIGHT', -18, 20)
 info:SetText('Goldänderungen werden automatisch erfasst.')
 
+-- Gold-Session Popup ---------------------------------------------------------
 sessionFrame = CreatePopup('TinkerBoxGoldSession', 'Gold-Session', 196, 184)
 
 local sessEarnedLabel = sessionFrame:CreateFontString(nil, 'OVERLAY', 'GameFontDisableSmall')
@@ -311,6 +316,7 @@ sessNet:SetJustifyH('RIGHT')
 local sessReset = CreateThemeButton(sessionFrame, 120, 30, 'Session Reset', true)
 sessReset:SetPoint('BOTTOM', sessionFrame, 'BOTTOM', 0, 14)
 
+-- Verlauf Popup --------------------------------------------------------------
 historyFrame = CreatePopup('TinkerBoxGoldHistory', 'Gold-Verlauf', 293, 405)
 
 local clearHistoryBtn = CreateThemeButton(historyFrame, 155, 30, 'Verlauf leeren', true)
@@ -328,12 +334,14 @@ historyScroll:SetScript('OnMouseWheel', function(self, delta)
     if delta > 0 then self:ScrollUp() else self:ScrollDown() end
 end)
 
+-- Anzeige --------------------------------------------------------------------
 local function UpdateChart()
     local gt = EnsureDB()
     local history = gt.history or {}
     local values = {}
     local running = 0
 
+    -- ältester zuerst, maximal die letzten 6 abgeschlossenen Tage
     local first = math.max(1, #history - 5)
     for i = #history, first, -1 do
         local entry = history[i]
@@ -418,6 +426,7 @@ UpdateHistoryDisplay = function()
     end
 end
 
+-- Aktionen -------------------------------------------------------------------
 sessionBtn:SetScript('OnClick', function()
     local gt = EnsureDB()
     gt.sessionStartEarned = gt.earned or 0
@@ -447,6 +456,7 @@ clearHistoryBtn:SetScript('OnClick', function()
     UpdateChart()
 end)
 
+-- Öffnen/Schließen -----------------------------------------------------------
 frame:SetScript('OnShow', function()
     UpdateDisplay()
 end)
