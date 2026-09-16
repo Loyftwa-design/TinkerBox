@@ -1,0 +1,18 @@
+## Interface: 120100
+## Title: TinkerBox by Loyftwa
+## Notes: Themed modular TinkerBox UI build for Midnight.
+## Author: Loyftwa
+## Version: 1.0.0
+## SavedVariables: TinkerBoxDB
+
+Core.lua
+UI.lua
+Modules\Home.lua
+Modules\FarmTracker.lua
+Modules\CraftingList.lua
+Modules\GoldTracker.lua
+Modules\Zusatzinfos.lua
+Modules\TinkerNotes.lua
+Modules\Settings.lua
+Minimap.lua
+Events.lua
