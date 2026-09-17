@@ -11,6 +11,7 @@ Modules\Home.lua
 Modules\FarmTracker.lua
 Modules\CraftingList.lua
 Modules\GoldTracker.lua
+Modules\GoldSessionPersistence.lua
 Modules\Zusatzinfos.lua
 Modules\TinkerNotes.lua
 Modules\Settings.lua
